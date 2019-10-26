@@ -17,8 +17,15 @@ public class FallingPlayer : MonoBehaviour
     public float[] maxVelocity = new float[2];
     public float[] sway = new float[2];
     Vector3 velocity;
-    public FallState fallstate;
 
+    [Header("State Vars")]
+    public FallState fallstate;
+    public float dragPosY = 4.5f;
+    public float divePosY = 3f;
+    public float fallPosYdelta = 0.1f;
+    bool changingDepth;
+
+    [Header("Bounds")]
     public float maxX;
     public float maxZ;
 
@@ -48,7 +55,7 @@ public class FallingPlayer : MonoBehaviour
     {
         Vector3 change = new Vector3(0f, 0f, 0f);
 
-        if (Input.GetAxis("Horizontal") > 0){
+        if (Input.GetAxis("Horizontal") > 0) {
             change.x += acceleration[(int)fallstate];
         }
         else if (Input.GetAxis("Horizontal") < 0)
@@ -65,13 +72,41 @@ public class FallingPlayer : MonoBehaviour
             change.z -= acceleration[(int)fallstate];
         }
 
-        if(Input.GetButton("Dive"))
+        if (Input.GetButtonDown("Dive"))
         {
             fallstate = FallState.Dive;
+            if (!changingDepth)
+            {
+                changingDepth = true;
+                StartCoroutine(ChangeDepth());
+            }
+
+            for (int i = 0; i < SpawnScript.instance.transform.childCount; i++)
+            {
+                SpawnScript.instance.transform.GetChild(i).GetComponent<Rigidbody>().velocity
+                                                            += (3 * Vector3.up);
+
+                if (i == 0)
+                    Debug.Log("dive " + SpawnScript.instance.transform.GetChild(i).GetComponent<Rigidbody>().velocity);
+            }
         }
-        else
+        else if(Input.GetButtonUp("Dive"))
         {
             fallstate = FallState.Drag;
+            if (!changingDepth)
+            {
+                changingDepth = true;
+                StartCoroutine(ChangeDepth());
+            }
+
+            for (int i = 0; i < SpawnScript.instance.transform.childCount; i++)
+            {
+                SpawnScript.instance.transform.GetChild(i).GetComponent<Rigidbody>().velocity
+                                                            += (3 * Vector3.down);
+
+                if (i == 0)
+                    Debug.Log("drag " + SpawnScript.instance.transform.GetChild(i).GetComponent<Rigidbody>().velocity);
+            }
         }
 
         if(change.magnitude > acceleration[(int)fallstate])
@@ -134,6 +169,22 @@ public class FallingPlayer : MonoBehaviour
 
     }
 
+    IEnumerator ChangeDepth()
+    {
+        while( (fallstate == FallState.Drag && transform.position.y < dragPosY)
+               || (fallstate == FallState.Dive && transform.position.y > divePosY) )
+        {
+            float delta = (((int)fallstate * -2) + 1) * fallPosYdelta;
+            transform.Translate(Vector3.back * delta);
+            yield return new WaitForEndOfFrame();
+        }
+
+        transform.position = fallstate == FallState.Drag ?
+                                new Vector3(transform.position.x, dragPosY, transform.position.z) :
+                                new Vector3(transform.position.x, divePosY, transform.position.z);
+
+        changingDepth = false;
+    }
 }
 
 public enum FallState

@@ -106,12 +106,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8147ed0a52f81924ca6acf4ffacf2ddd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pieceArray:
-  - {fileID: -1724268086697364117, guid: 80bbf07a619bcc9419eb7d43cc36b4b8, type: 3}
-  - {fileID: 5912331957575252134, guid: 4b0778d592ee3fe44ae7250caa2b2858, type: 3}
-  - {fileID: 3862215814111632095, guid: c822b3e4cd3ccfd4dbf4c9713f6b9488, type: 3}
-  - {fileID: 5125266022270850489, guid: 5b138a53b009d5843b5c104c137df15e, type: 3}
-  - {fileID: -6255869162832225253, guid: 60d8f77298efcc84f94aea9ea1f604ba, type: 3}
-  - {fileID: 229096727751928928, guid: 4b74ea58da63d014c980d1639a11987a, type: 3}
+  pieces: {fileID: 11400000, guid: e60fa31bedccc3944af6f2ab7bc77937, type: 2}
   minInterval: 1
   initVelocity: {x: 0, y: 100, z: 0}
+  radioSpawnTime: 30
+  bedSpawnTime: 30
