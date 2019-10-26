@@ -16,6 +16,12 @@ public class SpawnScript : MonoBehaviour {
 
     public float radioSpawnTime = 30f;
     public float bedSpawnTime = 30f;
+    
+    private float xr;
+    private float zr;
+    private Vector3 randomPosition;
+    private Piece go;
+    private int r;
 
     private void Awake()
     {
@@ -38,10 +44,23 @@ public class SpawnScript : MonoBehaviour {
     {
         yield return new WaitForSeconds(radioSpawnTime);
 
+        xr = Random.Range(-1.0f, 1.0f);
+        zr = Random.Range(-1.0f, 1.0f);
+        randomPosition = new Vector3(transform.position.x + xr * x, transform.position.y, transform.position.z + zr * z);
+        go = Instantiate(pieces.piece[6],randomPosition,Quaternion.identity);
+        go.transform.SetParent(transform, true);
+        go.id = 6;
+        go.GetComponent<Rigidbody>().velocity = Vector3.up * initVelocity;
         //spawn radio
 
         yield return new WaitForSeconds(bedSpawnTime);
-
+        xr = Random.Range(-1.0f, 1.0f);
+        zr = Random.Range(-1.0f, 1.0f);
+        randomPosition = new Vector3(transform.position.x + xr * x, transform.position.y, transform.position.z + zr * z);
+        go = Instantiate(pieces.piece[7],randomPosition,Quaternion.identity);
+        go.transform.SetParent(transform, true);
+        go.id = 7;
+        go.GetComponent<Rigidbody>().velocity = Vector3.up * initVelocity;
         //spawn bed
     }
 
@@ -53,10 +72,10 @@ public class SpawnScript : MonoBehaviour {
      }
 
      void spawnObject(){
-        float xr = Random.Range(-1.0f, 1.0f);
-        float zr = Random.Range(-1.0f, 1.0f);
-        Vector3 randomPosition = new Vector3(transform.position.x + xr * x, transform.position.y, transform.position.z + zr * z);
-        int r = Random.Range(0, 6);
+        xr = Random.Range(-1.0f, 1.0f);
+        zr = Random.Range(-1.0f, 1.0f);
+        randomPosition = new Vector3(transform.position.x + xr * x, transform.position.y, transform.position.z + zr * z);
+        r = Random.Range(0, 6);
         Piece go = Instantiate(pieces.piece[r], randomPosition, Quaternion.identity);
         go.transform.SetParent(transform, true);
         go.id = r;
