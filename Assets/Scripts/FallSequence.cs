@@ -17,7 +17,7 @@ public class FallSequence : MonoBehaviour
     public float termFloorScale = 2f;
     public float deltaFloorScale = 0.01f;
     public float floorHeightMax = 10f;
-    public float foorHeightDelta = 0.5f;
+    public float floorHeightDelta = 0.5f;
 
     private void Start()
     {
@@ -43,7 +43,7 @@ public class FallSequence : MonoBehaviour
             floorMat.mainTextureOffset -= deltaFloorScale * Vector2.one;
 
             if(floor.position.y < floorHeightMax)
-                floor.Translate(Vector3.up * foorHeightDelta, Space.World);
+                floor.Translate(Vector3.up * floorHeightDelta, Space.World);
 
             yield return new WaitForEndOfFrame();
         }
