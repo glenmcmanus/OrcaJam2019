@@ -86,8 +86,8 @@ public class FallingPlayer : MonoBehaviour
                 SpawnScript.instance.transform.GetChild(i).GetComponent<Rigidbody>().velocity
                                                             += (3 * Vector3.up);
 
-                if (i == 0)
-                    Debug.Log("dive " + SpawnScript.instance.transform.GetChild(i).GetComponent<Rigidbody>().velocity);
+               // if (i == 0)
+               //     Debug.Log("dive " + SpawnScript.instance.transform.GetChild(i).GetComponent<Rigidbody>().velocity);
             }
         }
         else if(Input.GetButtonUp("Dive"))
@@ -104,8 +104,8 @@ public class FallingPlayer : MonoBehaviour
                 SpawnScript.instance.transform.GetChild(i).GetComponent<Rigidbody>().velocity
                                                             += (3 * Vector3.down);
 
-                if (i == 0)
-                    Debug.Log("drag " + SpawnScript.instance.transform.GetChild(i).GetComponent<Rigidbody>().velocity);
+               // if (i == 0)
+               //     Debug.Log("drag " + SpawnScript.instance.transform.GetChild(i).GetComponent<Rigidbody>().velocity);
             }
         }
 
