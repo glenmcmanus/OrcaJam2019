@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.4465782, g: 0.49641252, b: 0.5748167, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657886, g: 0.4964127, b: 0.57481724, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -367,6 +367,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1032772382788785128, guid: 58f9d0cc7609e674d9e9a8e277ce33e4,
+        type: 3}
+      propertyPath: m_Name
+      value: Tube
+      objectReference: {fileID: 0}
     - target: {fileID: 507705073307115372, guid: 58f9d0cc7609e674d9e9a8e277ce33e4,
         type: 3}
       propertyPath: m_LocalRotation.y
@@ -427,11 +432,16 @@ PrefabInstance:
       propertyPath: speed
       value: -0.01
       objectReference: {fileID: 0}
-    - target: {fileID: 1032772382788785128, guid: 58f9d0cc7609e674d9e9a8e277ce33e4,
+    - target: {fileID: 8982491320784569389, guid: 58f9d0cc7609e674d9e9a8e277ce33e4,
         type: 3}
-      propertyPath: m_Name
-      value: Tube
-      objectReference: {fileID: 0}
+      propertyPath: walls
+      value: 
+      objectReference: {fileID: 2100000, guid: 83ef4524ea94edf43bfff51868db1087, type: 2}
+    - target: {fileID: 8982491320784569389, guid: 58f9d0cc7609e674d9e9a8e277ce33e4,
+        type: 3}
+      propertyPath: floor
+      value: 
+      objectReference: {fileID: 2100000, guid: 6a9d8a0a1e007fe448e8bcf0be549067, type: 2}
     - target: {fileID: 1032772382788785131, guid: 58f9d0cc7609e674d9e9a8e277ce33e4,
         type: 3}
       propertyPath: m_LocalPosition.x
