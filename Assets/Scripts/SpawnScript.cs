@@ -53,10 +53,17 @@ public class SpawnScript : MonoBehaviour {
      }
 
      void spawnObject(){
+<<<<<<< HEAD
         float xr = Random.Range(-1.0f, 1.0f);
         float zr = Random.Range(-1.0f, 1.0f);
         Vector3 randomPosition = new Vector3(transform.position.x + xr * x, transform.position.y, transform.position.z + zr * z);
         //print(randomPosition);
+=======
+
+        float xr = Random.Range(0.0f, 1.0f);
+        float zr = Random.Range(0.0f, 1.0f);
+        Vector3 randomPosition = new Vector3(transform.position.x + xr * x, transform.position.y, transform.position.z + zr * z);
+>>>>>>> 9df86c19fc5d920715cfb70037c87482cdaeb7b6
         int r = Random.Range(0, 6);
         Piece go = Instantiate(pieces.piece[r], randomPosition, Quaternion.identity);
         go.transform.SetParent(transform, true);
