@@ -8,9 +8,6 @@ public class FallSequence : MonoBehaviour
 
     [Header("Walls")]
     public Material walls;
-    public float initSpeed = 0.01f;
-    public float termSpeed = 0.02f;
-    public float deltaSpeed = 0.001f;
     float speed;
 
     [Header("Floor")]
@@ -25,24 +22,14 @@ public class FallSequence : MonoBehaviour
     private void Start()
     {
         walls.mainTextureOffset = Vector2.zero;
-        speed = initSpeed;
-        StartCoroutine(SpeedUp());
-        StartCoroutine(Duration());
+        //StartCoroutine(Duration());
     }
 
     // Update is called once per frame
     void Update()
     {
-        walls.mainTextureOffset = new Vector2(0, walls.mainTextureOffset.y - speed);
-    }
-
-    IEnumerator SpeedUp()
-    {
-        while(speed < termSpeed)
-        {
-            speed += deltaSpeed;
-            yield return new WaitForEndOfFrame();
-        }
+        walls.mainTextureOffset = new Vector2(0, walls.mainTextureOffset.y - 
+                                       FallingPlayer.instance.fallSpeed[(int)FallingPlayer.instance.fallstate]);
     }
 
     IEnumerator Duration()
