@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider))]
 public class PieceDropper : MonoBehaviour
 {
+    public PieceDB pieces;
     public List<PieceSpawn> spawnQueue = new List<PieceSpawn>();
     /// <summary>
     /// Phase 1 is over, don't add more pieces, start dropping them for phase 2
@@ -16,7 +17,7 @@ public class PieceDropper : MonoBehaviour
 
     public void DespawnPiece(Piece piece)
     {
-        spawnQueue.Add(new PieceSpawn(piece.id, new Vector2(piece.gameObject.transform.position.x, Time.time)));
+        spawnQueue.Add(new PieceSpawn(piece.id, piece.gameObject.transform.position.x));
         Destroy(piece.gameObject);
     }
 
@@ -27,16 +28,26 @@ public class PieceDropper : MonoBehaviour
             DespawnPiece(other.GetComponent<Piece>());
         }
     }
+
+    IEnumerator Drop()
+    {
+        while(spawnQueue.Count > 0)
+        {
+
+            yield return new WaitForSeconds(1);
+        }
+    }
 }
 
+[System.Serializable]
 public struct PieceSpawn
 {
     public int id;
-    public Vector2 pos;
+    public float xpos;
 
-    public PieceSpawn(int id, Vector2 pos)
+    public PieceSpawn(int id, float xpos)
     {
         this.id = id;
-        this.pos = pos;
+        this.xpos = xpos;
     }
 }

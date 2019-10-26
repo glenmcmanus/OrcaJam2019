@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6164341907220750765}
   - component: {fileID: 7707514306785907767}
   - component: {fileID: 2157519127889771517}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,9 +105,10 @@ GameObject:
   - component: {fileID: 6990911272978795613}
   - component: {fileID: 1286651928970458656}
   - component: {fileID: 524004827838811653}
-  m_Layer: 0
+  - component: {fileID: 229096727751928928}
+  m_Layer: 8
   m_Name: Z piece2
-  m_TagString: Untagged
+  m_TagString: Piece
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -204,6 +205,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &229096727751928928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4971284891414881118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a5e7b3a2b01fc84e93661d28bf17674, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 0
 --- !u!1 &5707666526837708250
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,7 +230,7 @@ GameObject:
   - component: {fileID: 8007413359416730797}
   - component: {fileID: 8252171667287767475}
   - component: {fileID: 1569897997217860641}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -308,7 +322,7 @@ GameObject:
   - component: {fileID: 6143742942182378147}
   - component: {fileID: 7830699122113061859}
   - component: {fileID: 3635214958452648849}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
