@@ -35,7 +35,6 @@ public class SpawnScript : MonoBehaviour {
              float xr = Random.Range(0.0f,1.0f);
              float zr = Random.Range(0.0f,1.0f);
              Vector3 randomPosition = new Vector3 (transform.position.x + xr*x, transform.position.y, transform.position.z + zr*z );
-             print(randomPosition);
              int r = Random.Range(0,6);
              Instantiate(pieceArray[r], randomPosition, Quaternion.identity);
      }
