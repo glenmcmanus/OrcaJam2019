@@ -141,10 +141,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4006c7e6de868474eb48aea0dcc4c6d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fallDuration: 30
+  walls: {fileID: 2100000, guid: b15029dab673c5b4e9bf86439660be77, type: 2}
   initSpeed: 0.01
   termSpeed: 0.02
   deltaSpeed: 0.001
-  mat: {fileID: 2100000, guid: 83ef4524ea94edf43bfff51868db1087, type: 2}
+  floor: {fileID: 0}
+  floorMat: {fileID: 0}
+  initFloorScale: 10
+  termFloorScale: 2
+  deltaFloorScale: 0.01
+  floorHeightMax: 10
+  foorHeightDelta: 0.5
 --- !u!1 &1032772383008936112
 GameObject:
   m_ObjectHideFlags: 0
