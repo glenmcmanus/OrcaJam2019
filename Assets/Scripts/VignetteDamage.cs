@@ -9,9 +9,10 @@ public class VignetteDamage : MonoBehaviour
     //public bool ouch;
 
     public PostProcessProfile profile;
+    public float duration = 0.5f;
     Vignette m_Vignette;
-
     float hitTime;
+
 
     void Start()
     {
@@ -22,19 +23,41 @@ public class VignetteDamage : MonoBehaviour
 
     }
 
-    void Update()
+    /*void Update()
     {
-
         if(Time.time - hitTime < Mathf.PI-.5f)
         {
             m_Vignette.intensity.value = Mathf.Max(Mathf.Sin((Time.time - hitTime + 0.5f) * 2) - 0.5f, 0f);
         }
-    }
+    }*/
 
     public void Ouch()
     {
-        hitTime = Time.time;
+        StartCoroutine(Strobe());
+       // hitTime = Time.time;
     }
+
+    IEnumerator Strobe()
+    {
+        float timer = Time.time + duration;
+        while(Time.time < timer)
+        {
+            m_Vignette.intensity.value = 1 - (timer - Time.time) / duration;
+            yield return null;
+        }
+
+        m_Vignette.intensity.value = 1;
+
+        timer = Time.time + duration;
+        while (Time.time < timer)
+        {
+            m_Vignette.intensity.value = (timer - Time.time) / duration;
+            yield return null;
+        }
+
+        m_Vignette.intensity.value = 0;
+    }
+
     /*// Start is called before the first frame update
     public PostProcessVolume pVolume;
     Vignette v;

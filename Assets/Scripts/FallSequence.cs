@@ -25,41 +25,27 @@ public class FallSequence : MonoBehaviour
     private void Start()
     {
         walls.mainTextureOffset = Vector2.zero;
-        //StartCoroutine(Duration());
+        StartCoroutine(Progress());
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator Progress()
     {
-        walls.mainTextureOffset = new Vector2(0, walls.mainTextureOffset.y -
+        for (; ; )
+        {
+            walls.mainTextureOffset = new Vector2(0, walls.mainTextureOffset.y -
                                        fallSpeed[(int)FallingPlayer.instance.fallstate]);
 
-        curProgress += progress[(int)FallingPlayer.instance.fallstate];
+            curProgress += progress[(int)FallingPlayer.instance.fallstate];
 
-        if(curProgress >= fallLength)
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(1, 
-                                    UnityEngine.SceneManagement.LoadSceneMode.Single);
-        }
-    }
-
-    IEnumerator Duration()
-    {
-        floorMat.mainTextureScale = initFloorScale * Vector2.one;
-
-        float end = Time.time + fallLength;
-        while(floorMat.mainTextureScale.x > termFloorScale)
-        {
-            floorMat.mainTextureScale -= deltaFloorScale * Vector2.one;
-            floorMat.mainTextureOffset -= deltaFloorScale * Vector2.one;
-
-            if(floor.position.y < floorHeightMax)
-                floor.Translate(Vector3.up * floorHeightDelta, Space.World);
+            if (curProgress >= fallLength)
+            {
+                SpawnScript.instance.StopCoroutine(SpawnScript.instance.spawn);
+                break;
+                //UnityEngine.SceneManagement.SceneManager.LoadScene(1,
+                //                        UnityEngine.SceneManagement.LoadSceneMode.Single);
+            }
 
             yield return new WaitForEndOfFrame();
         }
-
-        floorMat.mainTextureScale = termFloorScale * Vector2.one;
-        floor.position = new Vector3(0, floorHeightMax, 0);
     }
 }
