@@ -60,7 +60,7 @@ public class SpawnScript : MonoBehaviour {
         Piece go = Instantiate(pieces.piece[r], randomPosition, Quaternion.identity);
         go.transform.SetParent(transform, true);
         go.id = r;
-        go.GetComponent<Rigidbody>().velocity = Vector3.up * initVelocity;
+        go.GetComponent<Rigidbody>().velocity = Vector3.up * FallingPlayer.instance.pieceDragSpd;
     }
 
 }

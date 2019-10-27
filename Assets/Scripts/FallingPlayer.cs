@@ -6,13 +6,18 @@ public class FallingPlayer : MonoBehaviour
 {
     public static FallingPlayer instance;
 
+    public PlayerHP hp;
+
     bool fallPhase;
     bool tetrisPhase;
     bool winPhase;
     bool losePhase;
 
+    public CapsuleCollider collider;
     Rigidbody rb;
     public float[] fallSpeed = new float[] { 0.001f, 0.002f };
+    public float pieceDiveSpd = 12;
+    public float pieceDragSpd = 6;
     public float[] acceleration = new float[2];
     public float[] maxVelocity = new float[2];
     public float[] sway = new float[2];
@@ -40,6 +45,8 @@ public class FallingPlayer : MonoBehaviour
         {
             instance = this;
         }
+
+        hp.curHP = hp.maxHP;
     }
 
     // Start is called before the first frame update
@@ -48,6 +55,7 @@ public class FallingPlayer : MonoBehaviour
         //StartCoroutine(StateMachine());
         rb = GetComponent<Rigidbody>();
         velocity = new Vector3(0f, 0f, 0f);
+        transform.position = new Vector3(0, dragPosY, 0);
     }
 
     // Update is called once per frame
@@ -84,7 +92,7 @@ public class FallingPlayer : MonoBehaviour
             for (int i = 0; i < SpawnScript.instance.transform.childCount; i++)
             {
                 SpawnScript.instance.transform.GetChild(i).GetComponent<Rigidbody>().velocity
-                                                            += (3 * Vector3.up);
+                                                            = (pieceDiveSpd * Vector3.up);
 
                // if (i == 0)
                //     Debug.Log("dive " + SpawnScript.instance.transform.GetChild(i).GetComponent<Rigidbody>().velocity);
@@ -102,7 +110,7 @@ public class FallingPlayer : MonoBehaviour
             for (int i = 0; i < SpawnScript.instance.transform.childCount; i++)
             {
                 SpawnScript.instance.transform.GetChild(i).GetComponent<Rigidbody>().velocity
-                                                            += (3 * Vector3.down);
+                                                            = (pieceDragSpd * Vector3.up);
 
                // if (i == 0)
                //     Debug.Log("drag " + SpawnScript.instance.transform.GetChild(i).GetComponent<Rigidbody>().velocity);
@@ -185,6 +193,36 @@ public class FallingPlayer : MonoBehaviour
 
         changingDepth = false;
     }
+
+    IEnumerator Struck()
+    {
+        hp.curHP -= 1;
+
+        if (hp.curHP <= 0)
+        {
+            Debug.Log("YOU ARE DEAD");
+        }
+
+        for(int i = 0; i < 3; i++)
+        {
+            GetComponent<MeshRenderer>().enabled = false;
+            yield return new WaitForSeconds(0.15f);
+            GetComponent<MeshRenderer>().enabled = true;
+            yield return null;
+        }
+
+        collider.enabled = true;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.collider.tag == "Piece")
+        {
+            collider.enabled = false;
+            StartCoroutine(Struck());
+        }
+    }
+    
 }
 
 public enum FallState

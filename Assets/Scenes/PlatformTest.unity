@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 1006297069}
   - component: {fileID: 1006297068}
   - component: {fileID: 1006297073}
+  - component: {fileID: 1006297074}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -148,7 +149,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1006297067}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c5a13d8504e6a8443b1d6ec9f3f4b0c7, type: 3}
   m_Name: 
@@ -261,6 +262,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1006297074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1006297067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d52a799562542b046931621af531a62b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 3
+  jumpSpeed: 1
+  boxCastDist: 0.1
+  stopJumpSpeed: 0
+  crouching: 0
+  canJump: 0
+  jumping: 0
 --- !u!1 &1715366568
 GameObject:
   m_ObjectHideFlags: 0
@@ -596,6 +616,11 @@ PrefabInstance:
       propertyPath: floor
       value: 
       objectReference: {fileID: 1928556616}
+    - target: {fileID: 8982491320784569389, guid: 58f9d0cc7609e674d9e9a8e277ce33e4,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 507705073307115372, guid: 58f9d0cc7609e674d9e9a8e277ce33e4,
         type: 3}
       propertyPath: m_LocalRotation.y

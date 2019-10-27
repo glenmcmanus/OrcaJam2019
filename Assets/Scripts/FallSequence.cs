@@ -8,6 +8,7 @@ public class FallSequence : MonoBehaviour
 
     [Header("Walls")]
     public Material walls;
+    public float[] fallSpeed = new float[2] { 4f, 8f };
     float speed;
 
     [Header("Floor")]
@@ -28,8 +29,8 @@ public class FallSequence : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        walls.mainTextureOffset = new Vector2(0, walls.mainTextureOffset.y - 
-                                       FallingPlayer.instance.fallSpeed[(int)FallingPlayer.instance.fallstate]);
+        walls.mainTextureOffset = new Vector2(0, walls.mainTextureOffset.y -
+                                       fallSpeed[(int)FallingPlayer.instance.fallstate]);
     }
 
     IEnumerator Duration()

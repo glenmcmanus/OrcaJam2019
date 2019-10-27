@@ -60,8 +60,6 @@ public class PlatformPlayer : MonoBehaviour
             crouching = false;
         }
 
-
-
         if(jumping)
         {
             if(!Input.GetKey(KeyCode.UpArrow) || rb.velocity.y < stopJumpSpeed)

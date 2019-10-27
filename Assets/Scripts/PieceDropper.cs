@@ -41,7 +41,11 @@ public class PieceDropper : MonoBehaviour
     {
         if (other.tag == "Piece")
         {
-            DespawnPiece(other.GetComponent<Piece>());
+            Piece p = other.GetComponent<Piece>();
+            if(p)
+                DespawnPiece(other.GetComponent<Piece>());
+            else
+                DespawnPiece(other.GetComponentInParent<Piece>());
         }
     }
 
