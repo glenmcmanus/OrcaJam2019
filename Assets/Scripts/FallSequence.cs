@@ -47,5 +47,24 @@ public class FallSequence : MonoBehaviour
 
             yield return new WaitForEndOfFrame();
         }
+
+        for(int i = 0; i < 60; i++)
+        {
+            Camera.main.transform.Rotate(new Vector3(-1.3f, 0, 0));
+            Camera.main.transform.Translate(Vector3.down * 0.5f, Space.World);
+            Camera.main.transform.Translate(Vector3.back * 0.25f, Space.World);
+            yield return new WaitForEndOfFrame();
+        }
+
+        Camera.main.transform.rotation = Quaternion.Euler(0, 0, 0);
+
+        FallingPlayer.instance.enabled = false;
+        FallingPlayer.instance.platformPlayer.enabled = true;
+        FallingPlayer.instance.GetComponent<Rigidbody>().useGravity = true;
+
+        while (FallingPlayer.instance.platformPlayer.canJump == false)
+            yield return null;
+
+        PieceDropper.instance.SwitchPhases();
     }
 }
