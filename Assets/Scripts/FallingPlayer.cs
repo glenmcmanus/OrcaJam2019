@@ -8,6 +8,8 @@ public class FallingPlayer : MonoBehaviour
 
     public PlayerHP hp;
 
+    public GameObject postProcessing;
+
     bool fallPhase;
     bool tetrisPhase;
     bool winPhase;
@@ -196,6 +198,8 @@ public class FallingPlayer : MonoBehaviour
 
     IEnumerator Struck()
     {
+        postProcessing.GetComponent<VignetteDamage>().Ouch();
+
         hp.curHP -= 1;
 
         if (hp.curHP <= 0)
