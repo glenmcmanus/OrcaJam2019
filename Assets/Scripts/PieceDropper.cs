@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider))]
 public class PieceDropper : MonoBehaviour
 {
+    public static PieceDropper instance;
+
     public int debugPool = 0;
 
     public PieceDB pieces;
@@ -12,6 +14,16 @@ public class PieceDropper : MonoBehaviour
 
     private void Awake()
     {
+        if(instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        else
+        {
+            instance = this;
+        }
+
         if(debugPool > 0)
         {
             for(int i = 0; i < debugPool; i++)

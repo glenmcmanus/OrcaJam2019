@@ -5,6 +5,7 @@ using UnityEngine;
 public class FallingPlayer : MonoBehaviour
 {
     public static FallingPlayer instance;
+    public PlatformPlayer platformPlayer;
 
     public PlayerHP hp;
     public ParticleSystem bloodyDeath;

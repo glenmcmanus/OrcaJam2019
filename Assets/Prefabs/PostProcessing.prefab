@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 537940262903663637}
   - component: {fileID: 537940262903663636}
-  - component: {fileID: 537940262903663626}
+  - component: {fileID: 4471464429988697651}
   m_Layer: 9
   m_Name: PostProcessing
   m_TagString: Untagged
@@ -44,12 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: 9700fec8165ee4a4087f0ead64f0b47d, type: 2}
+  sharedProfile: {fileID: 0}
   isGlobal: 1
   blendDistance: 0
   weight: 1
   priority: 100
---- !u!114 &537940262903663626
+--- !u!114 &4471464429988697651
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -58,7 +58,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 537940262903663639}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fbef90a5e431154890f8e3d2c653c40, type: 3}
+  m_Script: {fileID: 11500000, guid: d35e0512137105340bcd411c033235d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profile: {fileID: 11400000, guid: 9700fec8165ee4a4087f0ead64f0b47d, type: 2}
+  profile: {fileID: 11400000, guid: 61580806b80003449a8b63ee4e150dbd, type: 2}

@@ -28,40 +28,46 @@ public class FallSequence : MonoBehaviour
         walls.mainTextureOffset = Vector2.zero;
         hasKey.hasKey = 0;
         //StartCoroutine(Duration());
+        StartCoroutine(Progress());
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator Progress()
     {
-        walls.mainTextureOffset = new Vector2(0, walls.mainTextureOffset.y -
+        for (; ; )
+        {
+            walls.mainTextureOffset = new Vector2(0, walls.mainTextureOffset.y -
                                        fallSpeed[(int)FallingPlayer.instance.fallstate]);
 
-        curProgress += progress[(int)FallingPlayer.instance.fallstate];
+            curProgress += progress[(int)FallingPlayer.instance.fallstate];
 
-        if(curProgress >= fallLength)
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(1, 
-                                    UnityEngine.SceneManagement.LoadSceneMode.Single);
-        }
-    }
-
-    IEnumerator Duration()
-    {
-        floorMat.mainTextureScale = initFloorScale * Vector2.one;
-
-        float end = Time.time + fallLength;
-        while(floorMat.mainTextureScale.x > termFloorScale)
-        {
-            floorMat.mainTextureScale -= deltaFloorScale * Vector2.one;
-            floorMat.mainTextureOffset -= deltaFloorScale * Vector2.one;
-
-            if(floor.position.y < floorHeightMax)
-                floor.Translate(Vector3.up * floorHeightDelta, Space.World);
+            if (curProgress >= fallLength)
+            {
+                SpawnScript.instance.StopCoroutine(SpawnScript.instance.spawn);
+                break;
+                //UnityEngine.SceneManagement.SceneManager.LoadScene(1,
+                //                        UnityEngine.SceneManagement.LoadSceneMode.Single);
+            }
 
             yield return new WaitForEndOfFrame();
         }
 
-        floorMat.mainTextureScale = termFloorScale * Vector2.one;
-        floor.position = new Vector3(0, floorHeightMax, 0);
+        for(int i = 0; i < 60; i++)
+        {
+            Camera.main.transform.Rotate(new Vector3(-1.3f, 0, 0));
+            Camera.main.transform.Translate(Vector3.down * 0.5f, Space.World);
+            Camera.main.transform.Translate(Vector3.back * 0.35f, Space.World);
+            yield return new WaitForEndOfFrame();
+        }
+
+        Camera.main.transform.rotation = Quaternion.Euler(0, 0, 0);
+
+        FallingPlayer.instance.enabled = false;
+        FallingPlayer.instance.platformPlayer.enabled = true;
+        FallingPlayer.instance.GetComponent<Rigidbody>().useGravity = true;
+
+        while (FallingPlayer.instance.platformPlayer.canJump == false)
+            yield return null;
+
+        PieceDropper.instance.SwitchPhases();
     }
 }

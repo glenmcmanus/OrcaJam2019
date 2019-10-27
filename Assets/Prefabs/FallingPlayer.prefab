@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6966638857172896017}
   - component: {fileID: 6966638857172896016}
   - component: {fileID: 6966638857172896031}
+  - component: {fileID: 650347279561488450}
   m_Layer: 0
   m_Name: FallingPlayer
   m_TagString: Untagged
@@ -123,7 +124,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5a13d8504e6a8443b1d6ec9f3f4b0c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  platformPlayer: {fileID: 0}
   hp: {fileID: 11400000, guid: 9b3ac7eba271e194bbc7a34eb60f7da2, type: 2}
+  bloodyDeath: {fileID: 0}
+  postProcessing: {fileID: 0}
   collider: {fileID: 6966638857172896017}
   fallSpeed:
   - 0.03
@@ -145,3 +149,33 @@ MonoBehaviour:
   fallPosYdelta: 0.1
   maxX: 4
   maxZ: 4
+--- !u!114 &650347279561488450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6966638857172896030}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d52a799562542b046931621af531a62b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: {fileID: 11400000, guid: 9b3ac7eba271e194bbc7a34eb60f7da2, type: 2}
+  bloodyDeath: {fileID: 7269680713350487483, guid: 833805c3f1e1c424a935d05caba62cd7,
+    type: 3}
+  collider: {fileID: 0}
+  jumpableLayers:
+    serializedVersion: 2
+    m_Bits: 768
+  strikeThreshold: 3
+  moveSpeed: 3
+  jumpSpeed: 3.5
+  jumpDecay: 0.5
+  jumpCheckBox: {x: 0.4, y: 0.1, z: 0.4}
+  jumpCheckOffset: 0.97
+  stopJumpSpeed: 0
+  struck: 1
+  crouching: 0
+  canJump: 0
+  jumping: 0

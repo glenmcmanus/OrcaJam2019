@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlatformPlayer : MonoBehaviour
 {
+    public static PlatformPlayer instance;
+
     public PlayerHP hp;
     public ParticleSystem bloodyDeath;
 
