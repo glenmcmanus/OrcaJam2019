@@ -7,6 +7,7 @@ public class FallSequence : MonoBehaviour
     public int fallLength = 30;
     public int[] progress = new int[] { 1, 2 };
     public int curProgress = 0;
+    public HasKey hasKey;
 
     [Header("Walls")]
     public Material walls;
@@ -25,6 +26,7 @@ public class FallSequence : MonoBehaviour
     private void Start()
     {
         walls.mainTextureOffset = Vector2.zero;
+        hasKey.hasKey = 0;
         //StartCoroutine(Duration());
     }
 
