@@ -12,6 +12,8 @@ public class PieceDropper : MonoBehaviour
     public PieceDB pieces;
     public List<PieceSpawn> spawnQueue = new List<PieceSpawn>();
 
+    public float doorHeight = 30f;
+
     private void Awake()
     {
         if(instance != null)
@@ -53,7 +55,17 @@ public class PieceDropper : MonoBehaviour
     {
         if (other.tag == "Piece")
         {
-            Piece p = other.GetComponent<Piece>();
+            Piece p;
+            if (!other.TryGetComponent<Piece>(out p))
+                return;
+            
+            if(p.id == 7) // door
+            {
+                p.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                p.transform.position = new Vector3(0, doorHeight, -8);
+                return;
+            }
+
             if(p)
                 DespawnPiece(other.GetComponent<Piece>());
             else

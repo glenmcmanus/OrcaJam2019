@@ -40,9 +40,12 @@ public class FallSequence : MonoBehaviour
             if (curProgress >= fallLength)
             {
                 SpawnScript.instance.StopCoroutine(SpawnScript.instance.spawn);
+            }
+
+            if(curProgress >= fallLength + 180)
+            {
+                FallingPlayer.instance.collider.enabled = false;
                 break;
-                //UnityEngine.SceneManagement.SceneManager.LoadScene(1,
-                //                        UnityEngine.SceneManagement.LoadSceneMode.Single);
             }
 
             yield return new WaitForEndOfFrame();
@@ -55,6 +58,8 @@ public class FallSequence : MonoBehaviour
             Camera.main.transform.Translate(Vector3.back * 0.35f, Space.World);
             yield return new WaitForEndOfFrame();
         }
+
+        FallingPlayer.instance.collider.enabled = true;
 
         Camera.main.transform.rotation = Quaternion.Euler(0, 0, 0);
 

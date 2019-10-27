@@ -49,7 +49,7 @@ public class SpawnScript : MonoBehaviour {
         xr = Random.Range(-1.0f, 1.0f);
         zr = Random.Range(-1.0f, 1.0f);
         randomPosition = new Vector3(transform.position.x + xr * x, transform.position.y, transform.position.z + zr * z);
-        go = Instantiate(pieces.piece[6],randomPosition,Quaternion.identity);
+        go = Instantiate(pieces.piece[6],randomPosition, Quaternion.identity);
         go.transform.SetParent(transform, true);
         go.id = 6;
         go.GetComponent<Rigidbody>().velocity = Vector3.up * initVelocity * 0.1f;
@@ -60,10 +60,10 @@ public class SpawnScript : MonoBehaviour {
         xr = Random.Range(-1.0f, 1.0f);
         zr = Random.Range(-1.0f, 1.0f);
         randomPosition = new Vector3(0, transform.position.y, 9f);
-        go = Instantiate(pieces.piece[7], randomPosition, Quaternion.Euler(90,0,0));
-        go.transform.SetParent(transform, true);
-        go.id = 7;
-        go.GetComponent<Rigidbody>().velocity = FallingPlayer.instance.pieceDragSpd * Vector3.up;
+        Piece door = Instantiate(pieces.piece[7], randomPosition, Quaternion.Euler(270,0,0));
+        door.transform.SetParent(transform, true);
+        door.id = 7;
+        door.GetComponent<Rigidbody>().velocity = FallingPlayer.instance.pieceDragSpd * Vector3.up;
     }
 
     IEnumerator Spawn() {
