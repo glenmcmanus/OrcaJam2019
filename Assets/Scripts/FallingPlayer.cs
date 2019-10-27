@@ -219,6 +219,11 @@ public class FallingPlayer : MonoBehaviour
         if(collision.collider.tag == "Piece")
         {
             collider.enabled = false;
+
+            transform.position = fallstate == FallState.Drag ?
+                                new Vector3(transform.position.x, dragPosY, transform.position.z) :
+                                new Vector3(transform.position.x, divePosY, transform.position.z);
+
             StartCoroutine(Struck());
         }
     }
