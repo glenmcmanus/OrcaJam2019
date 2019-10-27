@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class FallSequence : MonoBehaviour
 {
-    public float fallDuration = 30f;
+    public int fallLength = 30;
+    public int[] progress = new int[] { 1, 2 };
+    public int curProgress = 0;
 
     [Header("Walls")]
     public Material walls;
@@ -31,13 +33,21 @@ public class FallSequence : MonoBehaviour
     {
         walls.mainTextureOffset = new Vector2(0, walls.mainTextureOffset.y -
                                        fallSpeed[(int)FallingPlayer.instance.fallstate]);
+
+        curProgress += progress[(int)FallingPlayer.instance.fallstate];
+
+        if(curProgress >= fallLength)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(1, 
+                                    UnityEngine.SceneManagement.LoadSceneMode.Single);
+        }
     }
 
     IEnumerator Duration()
     {
         floorMat.mainTextureScale = initFloorScale * Vector2.one;
 
-        float end = Time.time + fallDuration;
+        float end = Time.time + fallLength;
         while(floorMat.mainTextureScale.x > termFloorScale)
         {
             floorMat.mainTextureScale -= deltaFloorScale * Vector2.one;
@@ -51,12 +61,5 @@ public class FallSequence : MonoBehaviour
 
         floorMat.mainTextureScale = termFloorScale * Vector2.one;
         floor.position = new Vector3(0, floorHeightMax, 0);
-
-        while(Time.time < end)
-        {
-            yield return null;
-        }
-
-        //do phase change
     }
 }

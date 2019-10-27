@@ -50,17 +50,18 @@ public class SpawnScript : MonoBehaviour {
         go = Instantiate(pieces.piece[6],randomPosition,Quaternion.identity);
         go.transform.SetParent(transform, true);
         go.id = 6;
-        go.GetComponent<Rigidbody>().velocity = Vector3.up * initVelocity;
+        go.GetComponent<Rigidbody>().velocity = Vector3.up * initVelocity * 0.1f;
+        go.GetComponent<Rigidbody>().AddTorque(Vector3.right * 8);
         //spawn radio
 
-        yield return new WaitForSeconds(bedSpawnTime);
+        /*yield return new WaitForSeconds(bedSpawnTime);
         xr = Random.Range(-1.0f, 1.0f);
         zr = Random.Range(-1.0f, 1.0f);
         randomPosition = new Vector3(transform.position.x + xr * x, transform.position.y, transform.position.z + zr * z);
         go = Instantiate(pieces.piece[7],randomPosition,Quaternion.identity);
         go.transform.SetParent(transform, true);
         go.id = 7;
-        go.GetComponent<Rigidbody>().velocity = Vector3.up * initVelocity;
+        go.GetComponent<Rigidbody>().velocity = Vector3.up * initVelocity;*/
         //spawn bed
     }
 
@@ -76,10 +77,28 @@ public class SpawnScript : MonoBehaviour {
         zr = Random.Range(-1.0f, 1.0f);
         randomPosition = new Vector3(transform.position.x + xr * x, transform.position.y, transform.position.z + zr * z);
         r = Random.Range(0, 6);
+
+        int rot = Random.Range(0, 4);
+        Vector3 rotation = Vector3.zero;
+
+        if (rot == 1)
+        {
+            rotation = new Vector3(1500, 0, 0);
+        }
+        else if(rot == 2)
+        {
+            rotation = new Vector3(0, 1500, 0);
+        }
+        else if(rot == 3)
+        {
+            rotation = new Vector3(0, 0, 1500);
+        }
+
         Piece go = Instantiate(pieces.piece[r], randomPosition, Quaternion.identity);
         go.transform.SetParent(transform, true);
         go.id = r;
         go.GetComponent<Rigidbody>().velocity = Vector3.up * FallingPlayer.instance.pieceDragSpd;
+        go.GetComponent<Rigidbody>().AddTorque(rotation);
     }
 
 }

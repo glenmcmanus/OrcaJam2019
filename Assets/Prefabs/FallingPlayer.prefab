@@ -123,9 +123,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5a13d8504e6a8443b1d6ec9f3f4b0c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: {fileID: 11400000, guid: 9b3ac7eba271e194bbc7a34eb60f7da2, type: 2}
+  collider: {fileID: 6966638857172896017}
   fallSpeed:
   - 0.03
   - 0.06
+  pieceDiveSpd: 12
+  pieceDragSpd: 6
   acceleration:
   - 2
   - 0.25

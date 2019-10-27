@@ -44,5 +44,18 @@ public class GameOverLetters : MonoBehaviour
 
             yield return null;
         }
+
+        float timer = Time.time + 5;
+        while(Time.time < timer)
+        {
+            if(Input.GetKeyDown(KeyCode.Escape))
+            {
+                break;
+            }
+
+            yield return null;
+        }
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0, UnityEngine.SceneManagement.LoadSceneMode.Single);
     }
 }
