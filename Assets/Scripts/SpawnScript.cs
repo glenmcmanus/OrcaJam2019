@@ -15,8 +15,10 @@ public class SpawnScript : MonoBehaviour {
     public float initVelocity = 6;
 
     public float radioSpawnTime = 30f;
-    public float bedSpawnTime = 30f;
-    
+    public float doorSpawnTime = 30f;
+
+    public Coroutine spawn;
+
     private float xr;
     private float zr;
     private Vector3 randomPosition;
@@ -36,7 +38,7 @@ public class SpawnScript : MonoBehaviour {
     }
 
     void Start() {
-        StartCoroutine(Spawn());
+        spawn = StartCoroutine(Spawn());
         StartCoroutine(SpecialDrop());
     }
 
@@ -54,15 +56,14 @@ public class SpawnScript : MonoBehaviour {
         go.GetComponent<Rigidbody>().AddTorque(Vector3.right * 8);
         //spawn radio
 
-        /*yield return new WaitForSeconds(bedSpawnTime);
+        yield return new WaitForSeconds(doorSpawnTime);
         xr = Random.Range(-1.0f, 1.0f);
         zr = Random.Range(-1.0f, 1.0f);
-        randomPosition = new Vector3(transform.position.x + xr * x, transform.position.y, transform.position.z + zr * z);
+        randomPosition = new Vector3(0, transform.position.y, 4.5f);
         go = Instantiate(pieces.piece[7],randomPosition,Quaternion.identity);
         go.transform.SetParent(transform, true);
         go.id = 7;
-        go.GetComponent<Rigidbody>().velocity = Vector3.up * initVelocity;*/
-        //spawn bed
+        go.GetComponent<Rigidbody>().velocity = FallingPlayer.instance.pieceDragSpd * Vector3.up;
     }
 
     IEnumerator Spawn() {
