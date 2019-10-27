@@ -59,8 +59,8 @@ public class SpawnScript : MonoBehaviour {
         yield return new WaitForSeconds(doorSpawnTime);
         xr = Random.Range(-1.0f, 1.0f);
         zr = Random.Range(-1.0f, 1.0f);
-        randomPosition = new Vector3(0, transform.position.y, 4.5f);
-        go = Instantiate(pieces.piece[7],randomPosition,Quaternion.identity);
+        randomPosition = new Vector3(0, transform.position.y, 9f);
+        go = Instantiate(pieces.piece[7], randomPosition, Quaternion.Euler(90,0,0));
         go.transform.SetParent(transform, true);
         go.id = 7;
         go.GetComponent<Rigidbody>().velocity = FallingPlayer.instance.pieceDragSpd * Vector3.up;

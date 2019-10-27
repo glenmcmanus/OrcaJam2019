@@ -52,7 +52,7 @@ public class FallSequence : MonoBehaviour
         {
             Camera.main.transform.Rotate(new Vector3(-1.3f, 0, 0));
             Camera.main.transform.Translate(Vector3.down * 0.5f, Space.World);
-            Camera.main.transform.Translate(Vector3.back * 0.25f, Space.World);
+            Camera.main.transform.Translate(Vector3.back * 0.35f, Space.World);
             yield return new WaitForEndOfFrame();
         }
 
