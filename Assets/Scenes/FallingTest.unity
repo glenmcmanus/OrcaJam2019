@@ -1091,7 +1091,7 @@ PrefabInstance:
     - target: {fileID: 8982491320784569389, guid: 58f9d0cc7609e674d9e9a8e277ce33e4,
         type: 3}
       propertyPath: fallLength
-      value: 200
+      value: 1800
       objectReference: {fileID: 0}
     - target: {fileID: 507705073307115372, guid: 58f9d0cc7609e674d9e9a8e277ce33e4,
         type: 3}
@@ -1177,11 +1177,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 650347279561488450, guid: dd4e5de1c24d8654e96456457eab2670,
-        type: 3}
-      propertyPath: collider
-      value: 
-      objectReference: {fileID: 980260269}
     - target: {fileID: 6966638857172896030, guid: dd4e5de1c24d8654e96456457eab2670,
         type: 3}
       propertyPath: m_Name
@@ -1294,6 +1289,11 @@ PrefabInstance:
       propertyPath: platformPlayer
       value: 
       objectReference: {fileID: 6966638856818962121}
+    - target: {fileID: 650347279561488450, guid: dd4e5de1c24d8654e96456457eab2670,
+        type: 3}
+      propertyPath: collider
+      value: 
+      objectReference: {fileID: 980260269}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd4e5de1c24d8654e96456457eab2670, type: 3}
 --- !u!114 &6966638856818962121 stripped
