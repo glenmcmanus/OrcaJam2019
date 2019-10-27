@@ -56,7 +56,10 @@ public class PieceDropper : MonoBehaviour
             Piece p = Instantiate(pieces.piece[spawnQueue[0].id], transform);
 
             p.transform.position = new Vector3(spawnQueue[0].xpos, transform.position.y, transform.position.z);
-            p.GetComponent<Rigidbody>().useGravity = true;
+            Rigidbody rb = p.GetComponent<Rigidbody>();
+            rb.useGravity = true;
+            rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY 
+                             | RigidbodyConstraints.FreezePositionZ;
             spawnQueue.RemoveAt(0);
 
             yield return new WaitForSeconds(2.5f);

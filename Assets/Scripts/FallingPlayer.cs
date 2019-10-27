@@ -7,6 +7,7 @@ public class FallingPlayer : MonoBehaviour
     public static FallingPlayer instance;
 
     public PlayerHP hp;
+    public ParticleSystem bloodyDeath;
 
     bool fallPhase;
     bool tetrisPhase;
@@ -200,7 +201,12 @@ public class FallingPlayer : MonoBehaviour
 
         if (hp.curHP <= 0)
         {
-            Debug.Log("YOU ARE DEAD");
+            GetComponent<MeshRenderer>().enabled = false;
+            bloodyDeath.Play();
+            yield return new WaitForSeconds(bloodyDeath.main.duration);
+
+            UnityEngine.SceneManagement.SceneManager.LoadScene("GameOver", 
+                 UnityEngine.SceneManagement.LoadSceneMode.Single);
         }
 
         for(int i = 0; i < 3; i++)
@@ -210,6 +216,8 @@ public class FallingPlayer : MonoBehaviour
             GetComponent<MeshRenderer>().enabled = true;
             yield return null;
         }
+
+        yield return new WaitForSeconds(0.75f);
 
         collider.enabled = true;
     }
