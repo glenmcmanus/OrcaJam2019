@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class FallSequence : MonoBehaviour
 {
+    public static FallSequence instance;
+
     public int fallLength = 30;
     public int[] progress = new int[] { 1, 2 };
     public int curProgress = 0;
@@ -23,6 +25,18 @@ public class FallSequence : MonoBehaviour
     public float floorHeightMax = 10f;
     public float floorHeightDelta = 0.5f;
 
+    private void Awake()
+    {
+        if(instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+        }
+    }
+
     private void Start()
     {
         walls.mainTextureOffset = Vector2.zero;
@@ -40,12 +54,9 @@ public class FallSequence : MonoBehaviour
 
             curProgress += progress[(int)FallingPlayer.instance.fallstate];
 
-            if (curProgress >= fallLength)
+            if (curProgress >= fallLength + 180)
             {
-                SpawnScript.instance.StopCoroutine(SpawnScript.instance.spawn);
                 break;
-                //UnityEngine.SceneManagement.SceneManager.LoadScene(1,
-                //                        UnityEngine.SceneManagement.LoadSceneMode.Single);
             }
 
             yield return new WaitForEndOfFrame();
@@ -59,15 +70,35 @@ public class FallSequence : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
-        Camera.main.transform.rotation = Quaternion.Euler(0, 0, 0);
+        Door.instance.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        Door.instance.transform.localPosition = new Vector3(0, PieceDropper.instance.doorHeight, 8);
 
         FallingPlayer.instance.enabled = false;
+
+        FallingPlayer.instance.fallstate = FallState.Drag;
+        FallingPlayer.instance.transform.position = new Vector3(FallingPlayer.instance.transform.position.x,
+                                                                FallingPlayer.instance.dragPosY,
+                                                                0);
+
+        FallingPlayer.instance.collider.enabled = true;
+
+        Camera.main.transform.rotation = Quaternion.Euler(0, 0, 0);
+
+        yield return new WaitForFixedUpdate();
+
         FallingPlayer.instance.platformPlayer.enabled = true;
+
+        
+
+        yield return new WaitForEndOfFrame();
+
         FallingPlayer.instance.GetComponent<Rigidbody>().useGravity = true;
 
-        while (FallingPlayer.instance.platformPlayer.canJump == false)
+        while (FallingPlayer.instance.platformPlayer.CanJump() == false)
             yield return null;
 
         PieceDropper.instance.SwitchPhases();
+
+        FallingPlayer.instance.platformPlayer.StartCoroutine(FallingPlayer.instance.platformPlayer.InputHandler());
     }
 }

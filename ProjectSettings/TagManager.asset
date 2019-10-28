@@ -17,12 +17,11 @@ TagManager:
   - Piece
   - PostProcess
   - Floor
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Key
+  - Player
+  - KeyTrigger
+  - Door
+  - Wall
   - 
   - 
   - 
