@@ -26,7 +26,7 @@ public class Door : MonoBehaviour
         if(hasKey.hasKey == keyCount)
         {
             Debug.Log("You win!");
-            UnityEngine.SceneManagement.SceneManager.LoadScene(0, UnityEngine.SceneManagement.LoadSceneMode.Single);
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Victory", UnityEngine.SceneManagement.LoadSceneMode.Single);
         }
     }
 }

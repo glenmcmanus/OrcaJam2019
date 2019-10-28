@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Models/FallGuy.prefab.meta
 guid: decd528ae8ebd2747a8aaef7d9b9ab6f
+=======
+guid: 826ee25e4ff04e144acb559dfc7c4c20
+>>>>>>> 42052651d7a1a2354feab71d636bb7c9ea43f0d2:Assets/Models/FallGuy.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 

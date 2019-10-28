@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8fabd6621fc9454abaf652adc74f1b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasKey: {fileID: 11400000, guid: 87ddb2a57ef6b004b84525fac9523bce, type: 2}
+  hasKey: {fileID: 11400000, guid: 59a24d0014af90349b0890fca79eb855, type: 2}
   keyCount: 3
 --- !u!65 &2864792281433045223
 BoxCollider:
