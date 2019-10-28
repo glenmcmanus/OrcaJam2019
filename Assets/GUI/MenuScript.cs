@@ -12,7 +12,7 @@ public class MenuScript : MonoBehaviour
 
     public void PressStart()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("FallingTest",
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Main",
                  UnityEngine.SceneManagement.LoadSceneMode.Single);
     }
     public void PressHowToPlay()
