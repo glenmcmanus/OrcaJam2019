@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor.Animations;
 
 public class PlatformPlayer : MonoBehaviour
 {
@@ -163,6 +162,8 @@ public class PlatformPlayer : MonoBehaviour
         Debug.Log("platform struck");
         struck = true;
 
+        FallingPlayer.instance.aSource.PlayOneShot(FallingPlayer.instance.hurtSFX);
+
         hp.curHP -= 1;
 
         if (hp.curHP <= 0)
@@ -187,7 +188,7 @@ public class PlatformPlayer : MonoBehaviour
             yield return null;
         }
 
-        yield return new WaitForSeconds(0.75f);
+        yield return new WaitForSeconds(1f);
 
         struck = false;
     }

@@ -8,7 +8,8 @@ public class KeyCollect : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        hasKey.hasKey = 1;
+        FallingPlayer.instance.aSource.PlayOneShot(FallingPlayer.instance.cheerSFX);
+        hasKey.hasKey += 1;
         Destroy(transform.parent.gameObject);
     }
 }

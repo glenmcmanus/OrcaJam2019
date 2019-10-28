@@ -6,6 +6,11 @@ public class FallingPlayer : MonoBehaviour
 {
     public static FallingPlayer instance;
 
+    public AudioSource aSource;
+    public AudioClip hurtSFX;
+    public AudioClip cheerSFX;
+    public AudioClip fallSFX;
+
     public Animator animator;
 
     public PlatformPlayer platformPlayer;
@@ -53,6 +58,7 @@ public class FallingPlayer : MonoBehaviour
             instance = this;
         }
 
+
         hp.curHP = hp.maxHP;
     }
 
@@ -63,6 +69,8 @@ public class FallingPlayer : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         velocity = new Vector3(0f, 0f, 0f);
         transform.position = new Vector3(0, dragPosY, 0);
+
+        aSource.PlayOneShot(fallSFX);
     }
 
     // Update is called once per frame
@@ -179,6 +187,8 @@ public class FallingPlayer : MonoBehaviour
     {
         Debug.Log("falling struck");
 
+        aSource.PlayOneShot(hurtSFX);
+
         postProcessing.GetComponent<VignetteDamage>().Ouch();
 
         hp.curHP -= 1;
@@ -204,7 +214,7 @@ public class FallingPlayer : MonoBehaviour
             yield return null;
         }
 
-        yield return new WaitForSeconds(0.75f);
+        yield return new WaitForSeconds(1f);
 
         collider.enabled = true;
     }
