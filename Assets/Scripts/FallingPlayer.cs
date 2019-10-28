@@ -97,9 +97,6 @@ public class FallingPlayer : MonoBehaviour
             {
                 SpawnScript.instance.transform.GetChild(i).GetComponent<Rigidbody>().velocity
                                                             = (pieceDiveSpd * Vector3.up);
-
-               // if (i == 0)
-               //     Debug.Log("dive " + SpawnScript.instance.transform.GetChild(i).GetComponent<Rigidbody>().velocity);
             }
         }
         else if(Input.GetButtonUp("Dive"))
@@ -115,9 +112,6 @@ public class FallingPlayer : MonoBehaviour
             {
                 SpawnScript.instance.transform.GetChild(i).GetComponent<Rigidbody>().velocity
                                                             = (pieceDragSpd * Vector3.up);
-
-               // if (i == 0)
-               //     Debug.Log("drag " + SpawnScript.instance.transform.GetChild(i).GetComponent<Rigidbody>().velocity);
             }
         }
 
@@ -137,28 +131,6 @@ public class FallingPlayer : MonoBehaviour
                 rb.velocity *= 0;
             }
         }
-
-        /*if(change.x == 0 && rb.velocity.x != 0)
-        {
-            if (Mathf.Abs(rb.velocity.x) > acceleration) {
-                change.x = -Mathf.Sign(rb.velocity.x) * acceleration;
-            }
-            else{
-                rb.velocity = new Vector3(0f, rb.velocity.y, rb.velocity.z);
-            }
-        }
-
-        if (change.z == 0 && rb.velocity.z != 0)
-        {
-            if (Mathf.Abs(rb.velocity.z) > acceleration)
-            {
-                change.z = -Mathf.Sign(rb.velocity.z) * acceleration;
-            }
-            else
-            {
-                rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, 0f);
-            }
-        }*/
 
         change.x += Random.Range(-sway[(int)fallstate], sway[(int)fallstate]);
         change.z += Random.Range(-sway[(int)fallstate], sway[(int)fallstate]);
@@ -187,7 +159,7 @@ public class FallingPlayer : MonoBehaviour
                || (fallstate == FallState.Dive && transform.position.y > divePosY) )
         {
             float delta = (((int)fallstate * -2) + 1) * fallPosYdelta;
-            transform.Translate(Vector3.back * delta);
+            transform.Translate(Vector3.up * delta);
             yield return new WaitForEndOfFrame();
         }
 
@@ -200,6 +172,8 @@ public class FallingPlayer : MonoBehaviour
 
     IEnumerator Struck()
     {
+        Debug.Log("falling struck");
+
         postProcessing.GetComponent<VignetteDamage>().Ouch();
 
         hp.curHP -= 1;
@@ -229,7 +203,7 @@ public class FallingPlayer : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.collider.tag == "Piece")
+        if(enabled && collision.collider.tag == "Piece")
         {
             collider.enabled = false;
 

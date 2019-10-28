@@ -1,10 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor.Animations;
 
 public class PlatformPlayer : MonoBehaviour
 {
     public static PlatformPlayer instance;
+
+    public Animator animator;
+    public AnimatorController controller;
 
     public PlayerHP hp;
     public ParticleSystem bloodyDeath;
@@ -22,8 +26,6 @@ public class PlatformPlayer : MonoBehaviour
 
     public bool struck;
 
-    Vector3 startScale;
-
     Vector2 movement;
 
     Rigidbody rb;
@@ -36,80 +38,65 @@ public class PlatformPlayer : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         collider = GetComponent<CapsuleCollider>();
-        startScale = transform.localScale;
+
+        struck = false;
+        jumping = false;
     }
 
     // Update is called once per frame
-    void Update()
+    public IEnumerator InputHandler()
     {
-        movement = Vector2.zero;
-        if (Input.GetAxis("Horizontal") < 0)
+        for (; ; )
         {
-            movement = Vector2.left;
-        }
-        else if (Input.GetAxis("Horizontal") > 0)
-        {
-            movement = Vector2.right;
-        }
-        rb.velocity = new Vector3(movement.x * moveSpeed, rb.velocity.y, 0f);
-
-        canJump = Physics.OverlapBox(transform.position - Vector3.up * jumpCheckOffset,
-                        jumpCheckBox, transform.localRotation, jumpableLayers).Length > 0;
-
-        if (Input.GetAxis("Vertical") > 0 && canJump && !jumping)
-        {
-            //jump
-            jumping = true;
-            StartCoroutine(Jump());
-        }
-        else if (Input.GetAxis("Vertical") < 0)
-        {
-            if (!crouching) { 
-                crouching = true;
-                transform.position -= Vector3.up * startScale.y * .5f;
-            }
-        }
-        else if(crouching)
-        {
-            transform.position += Vector3.up * startScale.y * .5f;
-            crouching = false;
-        }
-
-        if (jumping)
-        {
-            if(Input.GetAxis("Vertical") < 0 || rb.velocity.y < stopJumpSpeed)
+            movement = Vector2.zero;
+            if (Input.GetAxis("Horizontal") < 0)
             {
-                jumping = false;
-                rb.velocity = new Vector3(rb.velocity.x, stopJumpSpeed, rb.velocity.z);
+                movement = Vector2.left;
             }
+            else if (Input.GetAxis("Horizontal") > 0)
+            {
+                movement = Vector2.right;
+            }
+            rb.velocity = new Vector3(movement.x * moveSpeed, rb.velocity.y, 0f);
+
+            canJump = CanJump();
+
+            if (Input.GetAxis("Vertical") > 0 && canJump && !jumping)
+            {
+                //jump
+                jumping = true;
+                StartCoroutine(Jump());
+            }
+
+            if (jumping)
+            {
+                if (Input.GetAxis("Vertical") < 0 || rb.velocity.y < stopJumpSpeed)
+                {
+                    jumping = false;
+                    rb.velocity = new Vector3(rb.velocity.x, stopJumpSpeed, rb.velocity.z);
+                }
+            }
+
+            yield return new WaitForEndOfFrame();
         }
+    }
 
-
-
-        if (crouching)
-        {
-            transform.localScale = new Vector3(startScale.x, startScale.y * .5f, startScale.z);
-        }
-        else
-        {
-            transform.localScale = new Vector3(startScale.x, startScale.y, startScale.z);
-        }
-
-        
+    public bool CanJump()
+    {
+        return Physics.OverlapBox(transform.position - Vector3.up * jumpCheckOffset,
+                           jumpCheckBox, transform.localRotation, jumpableLayers).Length > 0;
     }
 
     IEnumerator Jump()
     {
-        float stopTime = Time.time + 0.5f;
-
         float jSpeed = jumpSpeed;
         rb.AddForce(jSpeed * Vector3.up, ForceMode.Impulse);
 
-        while (Time.time <= stopTime && Input.GetAxis("Vertical") > 0 && jSpeed > 0)
+        while (Input.GetAxis("Vertical") > 0 && jSpeed > 0)
         {
             jSpeed -= jumpDecay;
             rb.AddForce(jSpeed * Vector3.up, ForceMode.Force);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForFixedUpdate();
         }
 
         jumping = false;
@@ -122,7 +109,7 @@ public class PlatformPlayer : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (struck)
+        if (!enabled || struck)
             return;
 
         List<ContactPoint> cp = new List<ContactPoint>();
@@ -160,6 +147,7 @@ public class PlatformPlayer : MonoBehaviour
 
     IEnumerator Struck()
     {
+        Debug.Log("platform struck");
         struck = true;
 
         hp.curHP -= 1;
@@ -191,5 +179,7 @@ public class PlatformPlayer : MonoBehaviour
     {
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireCube(transform.position - Vector3.up * jumpCheckOffset, jumpCheckBox);
+
+        Gizmos.DrawSphere(transform.position, 0.1f);
     }
 }

@@ -57,5 +57,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ceebb8985ce59140b2f38d884868a4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugPool: 0
   pieces: {fileID: 11400000, guid: e60fa31bedccc3944af6f2ab7bc77937, type: 2}
   spawnQueue: []
+  doorHeight: 10

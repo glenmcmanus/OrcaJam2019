@@ -19,7 +19,7 @@ public class VignetteDamage : MonoBehaviour
         m_Vignette = profile.GetSetting<Vignette>();
         m_Vignette.color.value = new Color(0.5f, 0f, 0f, 1f);
         //profile = PostProcessManager.instance.QuickVolume(gameObject.layer, 100f, m_Vignette);
-        hitTime = Time.time - 2*Mathf.PI;
+        m_Vignette.intensity.value = 0;
 
     }
 

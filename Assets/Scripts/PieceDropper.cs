@@ -12,7 +12,7 @@ public class PieceDropper : MonoBehaviour
     public PieceDB pieces;
     public List<PieceSpawn> spawnQueue = new List<PieceSpawn>();
 
-    public float doorHeight = 30f;
+    public float doorHeight = 10f;
 
     private void Awake()
     {
@@ -30,9 +30,10 @@ public class PieceDropper : MonoBehaviour
         {
             for(int i = 0; i < debugPool; i++)
             {
-                spawnQueue.Add(new PieceSpawn(Random.Range(0, pieces.piece.Length), Random.Range(-4, 4)));
+                spawnQueue.Add(new PieceSpawn(Random.Range(0, 6), Random.Range(-4, 4), Vector3.zero));
             }
-            SwitchPhases();
+            GetComponent<BoxCollider>().enabled = false;
+            StartCoroutine(Drop());
         }
     }
 
@@ -42,12 +43,15 @@ public class PieceDropper : MonoBehaviour
     public void SwitchPhases()
     {
         GetComponent<BoxCollider>().enabled = false;
+        FindObjectOfType<Door>().GetComponent<BoxCollider>().enabled = true;
         StartCoroutine(Drop());
     }
 
     public void DespawnPiece(Piece piece)
     {
-        spawnQueue.Add(new PieceSpawn(piece.id, piece.gameObject.transform.position.x));
+        spawnQueue.Add(new PieceSpawn(piece.id, 
+                                      piece.gameObject.transform.position.x,
+                                      piece.transform.rotation.eulerAngles));
         Destroy(piece.gameObject);
     }
 
@@ -59,13 +63,6 @@ public class PieceDropper : MonoBehaviour
             if (!other.TryGetComponent<Piece>(out p))
                 return;
             
-            if(p.id == 7) // door
-            {
-                p.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                p.transform.position = new Vector3(0, doorHeight, -8);
-                return;
-            }
-
             if(p)
                 DespawnPiece(other.GetComponent<Piece>());
             else
@@ -75,16 +72,20 @@ public class PieceDropper : MonoBehaviour
 
     IEnumerator Drop()
     {
-        while(spawnQueue.Count > 0)
+        while (spawnQueue.Count > 0)
         {
-            Piece p = Instantiate(pieces.piece[spawnQueue[0].id], transform);
+            int index = spawnQueue.Count - 1;
+            Vector3 pos = new Vector3(spawnQueue[index].xpos, transform.position.y,
+                                               FallingPlayer.instance.transform.position.z);
 
-            p.transform.position = new Vector3(spawnQueue[0].xpos, transform.position.y, transform.position.z);
+            Piece p = Instantiate(pieces.piece[spawnQueue[index].id], pos,
+                                   Quaternion.Euler(spawnQueue[index].rotation), transform );
+
             Rigidbody rb = p.GetComponent<Rigidbody>();
             rb.useGravity = true;
             rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY 
                              | RigidbodyConstraints.FreezePositionZ;
-            spawnQueue.RemoveAt(0);
+            spawnQueue.RemoveAt(index);
 
             yield return new WaitForSeconds(2.5f);
         }
@@ -96,10 +97,12 @@ public struct PieceSpawn
 {
     public int id;
     public float xpos;
+    public Vector3 rotation;
 
-    public PieceSpawn(int id, float xpos)
+    public PieceSpawn(int id, float xpos, Vector3 rotation)
     {
         this.id = id;
         this.xpos = xpos;
+        this.rotation = rotation;
     }
 }
