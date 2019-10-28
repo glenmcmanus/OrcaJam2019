@@ -8,7 +8,6 @@ public class PlatformPlayer : MonoBehaviour
     public static PlatformPlayer instance;
 
     public Animator animator;
-    public AnimatorController controller;
 
     public PlayerHP hp;
     public ParticleSystem bloodyDeath;
@@ -52,14 +51,24 @@ public class PlatformPlayer : MonoBehaviour
             if (Input.GetAxis("Horizontal") < 0)
             {
                 movement = Vector2.left;
+                animator.SetInteger("run", -1);
             }
             else if (Input.GetAxis("Horizontal") > 0)
             {
                 movement = Vector2.right;
+                animator.SetInteger("run", 1);
             }
+            else
+                animator.SetInteger("run", 0);
+
             rb.velocity = new Vector3(movement.x * moveSpeed, rb.velocity.y, 0f);
 
             canJump = CanJump();
+            if(canJump)
+            {
+                animator.SetBool("grounded", true);
+                animator.SetBool("fall", false);
+            }
 
             if (Input.GetAxis("Vertical") > 0 && canJump && !jumping)
             {
@@ -89,6 +98,8 @@ public class PlatformPlayer : MonoBehaviour
 
     IEnumerator Jump()
     {
+        animator.SetBool("Jump", true);
+
         float jSpeed = jumpSpeed;
         rb.AddForce(jSpeed * Vector3.up, ForceMode.Impulse);
 
@@ -100,6 +111,8 @@ public class PlatformPlayer : MonoBehaviour
         }
 
         jumping = false;
+
+        animator.SetBool("fall", true);
     }
 
     Vector3 toV3(Vector2 v2)
@@ -154,7 +167,9 @@ public class PlatformPlayer : MonoBehaviour
 
         if (hp.curHP <= 0)
         {
-            GetComponent<MeshRenderer>().enabled = false;
+            transform.GetChild(0).gameObject.SetActive(false);
+            transform.GetChild(1).gameObject.SetActive(false);
+
             bloodyDeath.Play();
             yield return new WaitForSeconds(bloodyDeath.main.duration);
 
@@ -164,9 +179,11 @@ public class PlatformPlayer : MonoBehaviour
 
         for (int i = 0; i < 3; i++)
         {
-            GetComponent<MeshRenderer>().enabled = false;
+            transform.GetChild(0).gameObject.SetActive(false);
+            transform.GetChild(1).gameObject.SetActive(false);
             yield return new WaitForSeconds(0.15f);
-            GetComponent<MeshRenderer>().enabled = true;
+            transform.GetChild(0).gameObject.SetActive(true);
+            transform.GetChild(1).gameObject.SetActive(true);
             yield return null;
         }
 

@@ -5,6 +5,9 @@ using UnityEngine;
 public class FallingPlayer : MonoBehaviour
 {
     public static FallingPlayer instance;
+
+    public Animator animator;
+
     public PlatformPlayer platformPlayer;
 
     public PlayerHP hp;
@@ -89,6 +92,7 @@ public class FallingPlayer : MonoBehaviour
             fallstate = FallState.Dive;
             if (!changingDepth)
             {
+                animator.SetBool("dive", true);
                 changingDepth = true;
                 StartCoroutine(ChangeDepth());
             }
@@ -104,6 +108,7 @@ public class FallingPlayer : MonoBehaviour
             fallstate = FallState.Drag;
             if (!changingDepth)
             {
+                animator.SetBool("dive", false);
                 changingDepth = true;
                 StartCoroutine(ChangeDepth());
             }
@@ -180,7 +185,8 @@ public class FallingPlayer : MonoBehaviour
 
         if (hp.curHP <= 0)
         {
-            GetComponent<MeshRenderer>().enabled = false;
+            transform.GetChild(0).gameObject.SetActive(false);
+            transform.GetChild(1).gameObject.SetActive(false);
             bloodyDeath.Play();
             yield return new WaitForSeconds(bloodyDeath.main.duration);
 
@@ -190,9 +196,11 @@ public class FallingPlayer : MonoBehaviour
 
         for(int i = 0; i < 3; i++)
         {
-            GetComponent<MeshRenderer>().enabled = false;
+            transform.GetChild(0).gameObject.SetActive(false);
+            transform.GetChild(1).gameObject.SetActive(false);
             yield return new WaitForSeconds(0.15f);
-            GetComponent<MeshRenderer>().enabled = true;
+            transform.GetChild(0).gameObject.SetActive(true);
+            transform.GetChild(1).gameObject.SetActive(true);
             yield return null;
         }
 

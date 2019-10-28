@@ -88,7 +88,7 @@ public class FallSequence : MonoBehaviour
 
         FallingPlayer.instance.platformPlayer.enabled = true;
 
-        
+        FallingPlayer.instance.animator.SetBool("phase2", true);
 
         yield return new WaitForEndOfFrame();
 
@@ -96,6 +96,8 @@ public class FallSequence : MonoBehaviour
 
         while (FallingPlayer.instance.platformPlayer.CanJump() == false)
             yield return null;
+
+        FallingPlayer.instance.animator.SetBool("grounded", true);
 
         PieceDropper.instance.SwitchPhases();
 
