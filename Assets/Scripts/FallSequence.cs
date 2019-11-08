@@ -87,12 +87,18 @@ public class FallSequence : MonoBehaviour
         yield return new WaitForFixedUpdate();
 
         FallingPlayer.instance.platformPlayer.enabled = true;
+        FallingPlayer.instance.platformPlayer.StartCoroutine(FallingPlayer.instance.platformPlayer.InputHandler());
+
+        Debug.Log("Platform player enabled: " + FallingPlayer.instance.platformPlayer.enabled);
 
         FallingPlayer.instance.animator.SetBool("phase2", true);
 
         yield return new WaitForEndOfFrame();
 
         FallingPlayer.instance.GetComponent<Rigidbody>().useGravity = true;
+
+
+        Debug.Log("Platform player enabled: " + FallingPlayer.instance.platformPlayer.enabled);
 
         while (FallingPlayer.instance.platformPlayer.CanJump() == false)
             yield return null;
