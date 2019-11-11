@@ -66,7 +66,7 @@ public class PlatformPlayer : MonoBehaviour
             if(canJump)
             {
                 animator.SetBool("grounded", true);
-                animator.SetBool("fall", false);
+                animator.SetBool("dive", false);
             }
 
             if (Input.GetAxis("Vertical") > 0 && canJump && !jumping)
@@ -97,7 +97,7 @@ public class PlatformPlayer : MonoBehaviour
 
     IEnumerator Jump()
     {
-        animator.SetBool("Jump", true);
+        animator.SetBool("jump", true);
 
         float jSpeed = jumpSpeed;
         rb.AddForce(jSpeed * Vector3.up, ForceMode.Impulse);
@@ -111,7 +111,7 @@ public class PlatformPlayer : MonoBehaviour
 
         jumping = false;
 
-        animator.SetBool("fall", true);
+        animator.SetBool("dive", true);
     }
 
     Vector3 toV3(Vector2 v2)
