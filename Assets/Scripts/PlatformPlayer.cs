@@ -32,18 +32,15 @@ public class PlatformPlayer : MonoBehaviour
     public bool canJump;
     public bool jumping;
 
-    private void Start()
+    // Update is called once per frame
+    public IEnumerator InputHandler()
     {
         rb = GetComponent<Rigidbody>();
         collider = GetComponent<CapsuleCollider>();
 
         struck = false;
         jumping = false;
-    }
 
-    // Update is called once per frame
-    public IEnumerator InputHandler()
-    {
         for (; ; )
         {
             movement = Vector2.zero;
@@ -51,11 +48,13 @@ public class PlatformPlayer : MonoBehaviour
             {
                 movement = Vector2.left;
                 animator.SetInteger("run", -1);
+                transform.rotation = Quaternion.Euler(0, -90, 0);
             }
             else if (Input.GetAxis("Horizontal") > 0)
             {
                 movement = Vector2.right;
                 animator.SetInteger("run", 1);
+                transform.rotation = Quaternion.Euler(0, 90, 0);
             }
             else
                 animator.SetInteger("run", 0);
@@ -106,7 +105,7 @@ public class PlatformPlayer : MonoBehaviour
         {
             jSpeed -= jumpDecay;
             rb.AddForce(jSpeed * Vector3.up, ForceMode.Force);
-            yield return new WaitForFixedUpdate();
+            yield return null;
         }
 
         jumping = false;
@@ -138,7 +137,7 @@ public class PlatformPlayer : MonoBehaviour
 
         if ( collision.collider.GetComponent<Rigidbody>())
         {
-            if (collision.collider.tag == "Piece" 
+            if (collision.collider.tag == "Piece"
                 && collision.collider.GetComponent<Rigidbody>().velocity.magnitude >= strikeThreshold)
             {
                 //collider.enabled = false;
@@ -154,7 +153,7 @@ public class PlatformPlayer : MonoBehaviour
                 StartCoroutine(Struck());
             }
         }
-        
+
     }
 
     IEnumerator Struck()
