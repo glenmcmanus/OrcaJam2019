@@ -9,7 +9,7 @@ public class FallingPlayer : MonoBehaviour
     public AudioSource aSource;
     public AudioClip hurtSFX;
     public AudioClip cheerSFX;
-    public AudioClip fallSFX;
+    //public AudioClip fallSFX;
 
     public Animator animator;
 
@@ -70,7 +70,7 @@ public class FallingPlayer : MonoBehaviour
         velocity = new Vector3(0f, 0f, 0f);
         transform.position = new Vector3(0, dragPosY, 0);
 
-        aSource.PlayOneShot(fallSFX);
+        //aSource.PlayOneShot(fallSFX);
     }
 
     // Update is called once per frame
@@ -94,6 +94,7 @@ public class FallingPlayer : MonoBehaviour
         {
             change.z -= acceleration[(int)fallstate];
         }
+        
 
         if (Input.GetButtonDown("Dive"))
         {
